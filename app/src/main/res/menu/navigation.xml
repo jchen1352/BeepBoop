@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/profile"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_person_black_24dp"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/shop"
+        android:title="@string/shop"
+        android:icon="@drawable/ic_business_center_black_24dp"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/qrcode"
+        android:title="@string/qrcode"
+        android:icon="@drawable/ic_border_clear_black_24dp"
+        app:showAsAction="ifRoom" />
+</menu>

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Beep Boop</string>
+    <string name="profile">Profile</string>
+    <string name="shop">Marketplace</string>
+    <string name="qrcode">QR Code</string>
+    <string name="buy">Buy</string>
+    <string name="sell">Sell</string>
+    <string name="balance">Balance: $%1$d</string>
+    <string name="credits">Credits: %1$d</string>
+</resources>

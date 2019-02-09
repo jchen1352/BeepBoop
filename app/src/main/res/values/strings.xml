@@ -7,4 +7,10 @@
     <string name="sell">Sell</string>
     <string name="balance">Balance: $%1$d</string>
     <string name="credits">Credits: %1$d</string>
+    <string name="buy_dialog">Buy %1$d credits for $%2$d?</string>
+    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="sell_dialog">Sell %1$s credits for %2$s?</string>
+    <string name="pref_key">Prefs</string>
+    <string name="pref_user">Pref_User</string>
 </resources>

@@ -1,5 +1,6 @@
 package org.jeff.beepboop;
 
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -50,28 +52,8 @@ public class MainActivity extends AppCompatActivity {
         });
         bnv.setSelectedItemId(R.id.profile);
 
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.pref_key), MODE_PRIVATE);
+        prefs.edit().putString(getString(R.string.pref_user), "akshat02").apply();
 
-//        final TextView mTextView = findViewById(R.id.text);
-//        // Instantiate the RequestQueue.
-//        RequestQueue queue = Volley.newRequestQueue(this);
-//        String url ="http://beepboop.eastus.cloudapp.azure.com:8080/url";
-//
-//        // Request a string response from the provided URL.
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        // Display the first 500 characters of the response string.
-//                        mTextView.setText("Response is: "+ response);
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                mTextView.setText(error.getLocalizedMessage());
-//            }
-//        });
-//
-//        // Add the request to the RequestQueue.
-//        queue.add(stringRequest);
     }
 }

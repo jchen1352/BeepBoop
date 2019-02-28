@@ -52,8 +52,7 @@ public class MainActivity extends AppCompatActivity {
         });
         bnv.setSelectedItemId(R.id.profile);
 
-        SharedPreferences prefs = getSharedPreferences(getString(R.string.pref_key), MODE_PRIVATE);
-        prefs.edit().putString(getString(R.string.pref_user), "akshat02").apply();
+
 
     }
 }

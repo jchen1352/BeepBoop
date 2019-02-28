@@ -1,6 +1,8 @@
 package org.jeff.beepboop;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
@@ -24,6 +26,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        setupSplashIcon();
         uiHandler = new Handler(Looper.getMainLooper());
         redirectUserRunnable = new Runnable() {
             @Override
@@ -34,9 +37,15 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     public void redirectUser() {
-        Intent intent = new Intent(this, MainActivity.class); // replace with login activity
-        startActivity(intent);
-        finish();
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.pref_key), Context.MODE_PRIVATE);
+        if (prefs.contains(getString(R.string.pref_user))) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(this, LoginActivity.class); // replace with login activity
+            startActivity(intent);
+        }
     }
 
     public void startSplashIcon() {
@@ -55,7 +64,7 @@ public class SplashActivity extends AppCompatActivity {
     private void setupSplashIcon() {
         splashIcon = (ImageView) findViewById(R.id.splashIcon);
         splashBitmap = BitmapFactory.decodeResource(getResources(),
-                R.drawable.beepBoopLogo);
+                R.drawable.beep_boop_logo);
         splashIcon.setImageBitmap(Bitmap.createScaledBitmap(splashBitmap, 360, 360, false));
     }
 

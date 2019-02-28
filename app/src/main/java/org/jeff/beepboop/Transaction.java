@@ -10,19 +10,16 @@ public class Transaction {
     public static final String BOUGHT = "Bought";
     public static final String SOLD = "Sold";
     public static final String PENDING = "Pending";
-    @Retention(RetentionPolicy.SOURCE)
-    @StringDef({BOUGHT, SOLD, PENDING})
-    public @interface Status {}
 
-    public Date date;
     public int credits;
-    public int cents;
-    public @Status String status;
+    public int cash;
+    public String status;
+    public String listingId;
 
-    public Transaction(Date date, int credits, int cents, @Status String status) {
-        this.date = date;
+    public Transaction(int credits, int cash, String listingId, String status) {
         this.credits = credits;
-        this.cents = cents;
+        this.cash = cash;
+        this.listingId = listingId;
         this.status = status;
     }
 }

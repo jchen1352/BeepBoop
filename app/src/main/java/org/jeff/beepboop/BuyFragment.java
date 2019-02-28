@@ -1,6 +1,8 @@
 package org.jeff.beepboop;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,30 +14,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.security.auth.login.LoginException;
-
-public class ProfileFragment extends Fragment {
+public class BuyFragment extends Fragment {
 
     private Context context;
+    private ArrayList<Transaction> transactions;
 
     @Override
     public void onAttach(Context context) {
@@ -47,19 +43,16 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_profile, container, false);
-        TextView name = v.findViewById(R.id.profile_name);
+        View v = inflater.inflate(R.layout.activity_buy, container, false);
+        transactions = new ArrayList<>();
 
-        final ListView lv = v.findViewById(R.id.transaction_history);
+        final BuyAdapter adapter = new BuyAdapter(context, R.layout.transaction_item, transactions);
+        final ListView lv = v.findViewById(R.id.buylist);
+        lv.setAdapter(adapter);
 
         SharedPreferences prefs = context.getSharedPreferences(getString(R.string.pref_key), Context.MODE_PRIVATE);
-        final String id = prefs.getString(getString(R.string.pref_user), "hmm");
-        name.setText(id);
+        final String userid = prefs.getString(getString(R.string.pref_user), "fail");
 
-        final ArrayList<Transaction> transactions = new ArrayList<>(); // ALL LOGS
-        final TransactionAdapter adapter = new TransactionAdapter(context, R.layout.transaction_item, transactions);
-
-        // GET ALL SALES FIRST
         String salesListingIdURL = "http://beepboop.eastus.cloudapp.azure.com:3000/api/CreditListing";
         JsonArrayRequest jsonObjectRequest0 = new JsonArrayRequest
                 (Request.Method.GET, salesListingIdURL, null, new Response.Listener<JSONArray>() {
@@ -69,7 +62,7 @@ public class ProfileFragment extends Fragment {
                             for (int i = 0; i < response.length(); i += 1) {
                                 JSONObject obj = response.getJSONObject(i);
                                 Log.d("asdf", obj.toString());
-                                if (obj.getString("sellerAccount").endsWith(id)) {
+                                if (obj.getString("state").equals("FOR_SALE") && !obj.getString("sellerAccount").endsWith(userid)) {
                                     final int numCredits = (int) obj.getDouble("numCredits");
                                     final int price = (int) obj.getDouble("price");
                                     final String listingId = obj.getString("listingId");
@@ -100,45 +93,56 @@ public class ProfileFragment extends Fragment {
         // Access the RequestQueue through your singleton class.
         MySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest0);
 
-        lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adapter.notifyDataSetChanged();
+                final Transaction transaction = transactions.get(position);
+                int dollars = transaction.cash;
+                int credits = transaction.credits;
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage(getString(R.string.buy_dialog, credits, dollars))
+                        .setPositiveButton(R.string.dialog_confirm, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String salesListingIdURL = "http://beepboop.eastus.cloudapp.azure.com:3000/api/Buy";
+                                JSONObject objRequest = new JSONObject();
+                                try {
+                                    objRequest.put("$class", "org.acme.vehicle.auction.Buy");
+                                    objRequest.put("buyerAccount", userid);
+                                    objRequest.put("listing", transaction.listingId);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                JsonObjectRequest jsonObjectRequest0 = new JsonObjectRequest
+                                        (Request.Method.POST, salesListingIdURL, objRequest, new Response.Listener<JSONObject>() {
+                                            @Override
+                                            public void onResponse(JSONObject response) {
+                                                Log.d("asdf", "Buy completed");
+                                            }
+                                        }, new Response.ErrorListener() {
+
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                // TODO: Handle error
+                                                Log.e("asdf", error.getLocalizedMessage());
+                                            }
+                                        });
+
+                                // Access the RequestQueue through your singleton class.
+                                MySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest0);
+                            }
+                        })
+                        .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
-
-        final TextView balance = v.findViewById(R.id.balance);
-        final TextView credits = v.findViewById(R.id.credits);
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(context);
-        String url ="http://beepboop.eastus.cloudapp.azure.com:3000/api/BeepBoopAccount/" + id;
-
-        JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            double b = response.getDouble("cashBalance");
-                            balance.setText(getString(R.string.balance, (int) b));
-                            double c = response.getDouble("creditBalance");
-                            credits.setText(getString(R.string.credits, (int) c));
-                        } catch (JSONException e) {
-                            Log.e("asdf", e.getLocalizedMessage());
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-                        Log.e("asdf", error.getLocalizedMessage());
-                    }
-                });
-
-        // Access the RequestQueue through your singleton class.
-        MySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest2);
-
         return v;
     }
 }

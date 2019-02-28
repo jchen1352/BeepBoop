@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class TransactionAdapter extends ArrayAdapter<Transaction> {
+public class BuyAdapter extends ArrayAdapter<Transaction> {
 
-    public TransactionAdapter(@NonNull Context context, int resource, @NonNull List<Transaction> objects) {
+    public BuyAdapter(@NonNull Context context, int resource, @NonNull List<Transaction> objects) {
         super(context, resource, objects);
     }
 
@@ -26,10 +26,8 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
         }
         TextView creditsView = convertView.findViewById(R.id.credits);
         TextView moneyView = convertView.findViewById(R.id.money);
-        TextView statusView = convertView.findViewById(R.id.status);
         creditsView.setText(Integer.toString(transaction.credits));
         moneyView.setText(String.format("$%d", transaction.cash));
-        statusView.setText(transaction.status);
         return convertView;
     }
 }

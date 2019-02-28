@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/dollar_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$"
+        android:textSize="24sp"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/credit_text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="for "
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/dollar_text"
+        app:layout_constraintLeft_toLeftOf="@id/dollar_text" />
+
+    <EditText
+        android:id="@+id/money_edit"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintTop_toTopOf="@id/dollar_text"
+        app:layout_constraintBottom_toBottomOf="@id/dollar_text"
+        app:layout_constraintLeft_toRightOf="@id/credit_text1"/>
+
+    <EditText
+        android:id="@+id/credit_edit"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        app:layout_constraintTop_toTopOf="@id/credit_text1"
+        app:layout_constraintBottom_toBottomOf="@id/credit_text1"
+        app:layout_constraintLeft_toLeftOf="@id/money_edit" />
+
+    <TextView
+        android:id="@+id/credit_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="credits"
+        android:textSize="24sp"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintTop_toTopOf="@id/credit_text1"
+        app:layout_constraintBottom_toBottomOf="@id/credit_text1"
+        app:layout_constraintLeft_toRightOf="@id/credit_edit"/>
+
+    <Button
+        android:id="@+id/sell_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Post"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@id/credit_text2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>

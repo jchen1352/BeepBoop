@@ -100,41 +100,6 @@ public class ProfileFragment extends Fragment {
         // Access the RequestQueue through your singleton class.
         MySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest0);
 
-        // GET ALL BUYS THEN
-        String buyIdURL = "http://beepboop.eastus.cloudapp.azure.com:3000/api/CreditListing";
-        JsonArrayRequest jsonObjectRequest1 = new JsonArrayRequest
-                (Request.Method.GET, buyIdURL, null, new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        try {
-                            for (int i = 0; i < response.length(); i += 1) {
-                                JSONObject obj = response.getJSONObject(i);
-                                if (obj.getString("sellerAccount").endsWith(id)) {
-                                    Log.d("asdf","Jeff here");
-                                    int numCredits = (int) obj.getDouble("numCredits");
-                                    int price = (int) obj.getDouble("price");
-                                    String listingId = obj.getString("listingId");
-                                    String status = obj.getString("state");
-                                    transactions.add(new Transaction(numCredits, price, listingId, status));
-                                }
-
-                            }
-                        } catch (JSONException e) {
-                            Log.e("asdf", e.getLocalizedMessage());
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-                        Log.e("asdf", error.getLocalizedMessage());
-                    }
-                });
-
-        // Access the RequestQueue through your singleton class.
-        MySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest1);
-
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

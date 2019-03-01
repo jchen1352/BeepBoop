@@ -31,12 +31,14 @@ import java.util.Date;
 public class BuyFragment extends Fragment {
 
     private Context context;
+    private boolean attached = false;
     private ArrayList<Transaction> transactions;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
+        attached = true;
     }
 
     @Nullable
@@ -58,27 +60,29 @@ public class BuyFragment extends Fragment {
                 (Request.Method.GET, salesListingIdURL, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        try {
-                            for (int i = 0; i < response.length(); i += 1) {
-                                JSONObject obj = response.getJSONObject(i);
-                                Log.d("asdf", obj.toString());
-                                if (obj.getString("state").equals("FOR_SALE") && !obj.getString("sellerAccount").endsWith(userid)) {
-                                    final int numCredits = (int) obj.getDouble("numCredits");
-                                    final int price = (int) obj.getDouble("price");
-                                    final String listingId = obj.getString("listingId");
-                                    final String status = obj.getString("state");
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            transactions.add(new Transaction(numCredits, price, listingId, status));
-                                            lv.requestLayout();
-                                            adapter.notifyDataSetChanged();
-                                        }
-                                    });
+                        if (attached) {
+                            try {
+                                for (int i = 0; i < response.length(); i += 1) {
+                                    JSONObject obj = response.getJSONObject(i);
+                                    Log.d("asdf", obj.toString());
+                                    if (obj.getString("state").equals("FOR_SALE") && !obj.getString("sellerAccount").endsWith(userid)) {
+                                        final int numCredits = (int) obj.getDouble("numCredits");
+                                        final int price = (int) obj.getDouble("price");
+                                        final String listingId = obj.getString("listingId");
+                                        final String status = obj.getString("state");
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                transactions.add(new Transaction(numCredits, price, listingId, status));
+                                                lv.requestLayout();
+                                                adapter.notifyDataSetChanged();
+                                            }
+                                        });
+                                    }
                                 }
+                            } catch (JSONException e) {
+                                Log.e("asdf", e.getLocalizedMessage());
                             }
-                        } catch (JSONException e) {
-                            Log.e("asdf", e.getLocalizedMessage());
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -144,5 +148,11 @@ public class BuyFragment extends Fragment {
             }
         });
         return v;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        attached = false;
     }
 }

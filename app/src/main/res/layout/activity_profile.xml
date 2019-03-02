@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/profile_container1"
@@ -58,8 +57,9 @@
     <LinearLayout
         android:id="@+id/profile_container2"
         android:orientation="horizontal"
-        android:layout_below="@id/profile_container1"
+        android:layout_below="@id/profile_divider1"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -127,10 +127,17 @@
 
     </LinearLayout>
 
+    <View
+        android:id="@+id/profile_divider2"
+        android:layout_below="@id/profile_container2"
+        android:background="@color/gray"
+        android:layout_width = "fill_parent"
+        android:layout_height="1dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/profile_container2"
+        android:layout_below="@id/profile_divider2"
         android:orientation="vertical"
         android:layout_marginTop="24dp"
         android:gravity="center_horizontal"

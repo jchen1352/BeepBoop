@@ -36,8 +36,7 @@ public class BuyAdapter extends ArrayAdapter<Transaction> {
         icon.setText(convertView.getContext().getResources().getText(R.string.coins_icon));
         creditsView.setText(Integer.toString(transaction.credits));
         moneyView.setText(String.format("$ %d", transaction.cash));
-        statusView.setText("for");
-//        statusView.setTextColor(ResourcesCompat.getColor(convertView.getContext().getResources(), R.color.green, null));
+        statusView.setText("");
         return convertView;
     }
 }

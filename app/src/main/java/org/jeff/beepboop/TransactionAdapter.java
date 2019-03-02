@@ -38,7 +38,7 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
 
         switch (transaction.status) {
             case "FOR_SALE":
-                statusView.setText("For Sale");
+                statusView.setText("For sale");
                 statusView.setTextColor(ResourcesCompat.getColor(convertView.getContext().getResources(), R.color.IndianRed, null));
             break;
             // TODO: add other cases

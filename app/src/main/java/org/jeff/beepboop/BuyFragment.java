@@ -81,7 +81,7 @@ public class BuyFragment extends Fragment {
                                     }
                                 }
                             } catch (JSONException e) {
-                                Log.e("asdf", e.getLocalizedMessage());
+                                e.printStackTrace();
                             }
                         }
                     }
@@ -90,7 +90,7 @@ public class BuyFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Log.e("asdf", error.getLocalizedMessage());
+                        error.printStackTrace();
                     }
                 });
 
@@ -129,7 +129,7 @@ public class BuyFragment extends Fragment {
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
                                                 // TODO: Handle error
-                                                Log.e("asdf", error.getLocalizedMessage());
+                                                error.printStackTrace();
                                             }
                                         });
 

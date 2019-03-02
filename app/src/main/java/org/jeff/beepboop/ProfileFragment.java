@@ -83,7 +83,7 @@ public class ProfileFragment extends Fragment {
                                     }
                                 }
                             } catch (JSONException e) {
-                                Log.e("asdf", e.getLocalizedMessage());
+                                e.printStackTrace();
                             }
                         }
                     }
@@ -92,7 +92,7 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Log.e("asdf", error.getLocalizedMessage());
+                        error.printStackTrace();
                     }
                 });
 
@@ -119,7 +119,7 @@ public class ProfileFragment extends Fragment {
                                 credits.setText(getString(R.string.credits, (int) c));
                             }
                         } catch (JSONException e) {
-                            Log.e("asdf", e.getLocalizedMessage());
+                            e.printStackTrace();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -127,7 +127,7 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Log.e("asdf", error.getLocalizedMessage());
+                        error.printStackTrace();
                     }
                 });
 

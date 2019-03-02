@@ -81,7 +81,7 @@ public class SellFragment extends Fragment {
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
                                                 // TODO: Handle error
-                                                Log.e("asdf", error.getLocalizedMessage());
+                                                error.printStackTrace();
                                             }
                                         });
 

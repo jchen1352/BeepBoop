@@ -1,5 +1,7 @@
 package org.jeff.beepboop;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,22 +19,20 @@ import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 public class QRCodeFragment extends Fragment {
+
+    private Context context;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_qrcode, container, false);
-//        ImageView imageView = v.findViewById(R.id.qrcode);
-//        String text = "blah"; // Whatever you need to encode in the QR code
-//        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-//        try {
-//            BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.QR_CODE,200,200);
-//            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-//            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
-//            imageView.setImageBitmap(bitmap);
-//        } catch (WriterException e) {
-//            e.printStackTrace();
-//        }
         return v;
     }
 }

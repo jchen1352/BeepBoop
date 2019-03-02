@@ -4,40 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<LinearLayout-->
-        <!--android:id="@+id/buy_container1"-->
-        <!--android:layout_marginTop="16dp"-->
-        <!--android:padding="8dp"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-        <!--<TextView-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:textSize="22sp"-->
-            <!--android:gravity="center"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_height="wrap_content" />-->
-        <!--<TextView-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:textSize="22sp"-->
-            <!--android:gravity="center"-->
-            <!--android:background="@color/DarkCyan"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Credits"-->
-            <!--/>-->
-        <!--<TextView-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:textSize="22sp"-->
-            <!--android:gravity="center"-->
-            <!--android:background="@color/DarkCyan"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:text="Price"-->
-            <!--android:layout_height="wrap_content" />-->
-    <!--</LinearLayout>-->
-
     <ListView
         android:id="@+id/buylist"
         android:layout_width="match_parent"

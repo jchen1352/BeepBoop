@@ -36,11 +36,13 @@ import javax.security.auth.login.LoginException;
 public class ProfileFragment extends Fragment {
 
     private Context context;
+    private boolean attached = false;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
+        attached = true;
     }
 
     @Nullable
@@ -69,27 +71,24 @@ public class ProfileFragment extends Fragment {
                 (Request.Method.GET, salesListingIdURL, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        try {
-                            for (int i = 0; i < response.length(); i += 1) {
-                                JSONObject obj = response.getJSONObject(i);
-                                Log.d("asdf", obj.toString());
-                                if (obj.getString("sellerAccount").endsWith(id)) {
-                                    final int numCredits = (int) obj.getDouble("numCredits");
-                                    final int price = (int) obj.getDouble("price");
-                                    final String listingId = obj.getString("listingId");
-                                    final String status = obj.getString("state");
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            transactions.add(new Transaction(numCredits, price, listingId, status));
-                                            lv.requestLayout();
-                                            adapter.notifyDataSetChanged();
-                                        }
-                                    });
+                        if (attached) {
+                            try {
+                                for (int i = 0; i < response.length(); i += 1) {
+                                    JSONObject obj = response.getJSONObject(i);
+                                    Log.d("asdf", obj.toString());
+                                    if (obj.getString("sellerAccount").endsWith(id)) {
+                                        final int numCredits = (int) obj.getDouble("numCredits");
+                                        final int price = (int) obj.getDouble("price");
+                                        final String listingId = obj.getString("listingId");
+                                        final String status = obj.getString("state");
+                                        transactions.add(new Transaction(numCredits, price, listingId, status));
+                                        lv.requestLayout();
+                                        adapter.notifyDataSetChanged();
+                                    }
                                 }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            Log.e("asdf", e.getLocalizedMessage());
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -97,7 +96,7 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Log.e("asdf", error.getLocalizedMessage());
+                        error.printStackTrace();
                     }
                 });
 
@@ -105,12 +104,6 @@ public class ProfileFragment extends Fragment {
         MySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest0);
 
         lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adapter.notifyDataSetChanged();
-            }
-        });
 
         final TextView balance = v.findViewById(R.id.balance);
         final TextView credits = v.findViewById(R.id.credits);
@@ -123,12 +116,14 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            double b = response.getDouble("cashBalance");
-                            balance.setText(getString(R.string.balance, (int) b));
-                            double c = response.getDouble("creditBalance");
-                            credits.setText(getString(R.string.credits, (int) c));
+                            if (attached) {
+                                double b = response.getDouble("cashBalance");
+                                balance.setText(getString(R.string.balance, (int) b));
+                                double c = response.getDouble("creditBalance");
+                                credits.setText(getString(R.string.credits, (int) c));
+                            }
                         } catch (JSONException e) {
-                            Log.e("asdf", e.getLocalizedMessage());
+                            e.printStackTrace();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -136,7 +131,7 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Log.e("asdf", error.getLocalizedMessage());
+                        error.printStackTrace();
                     }
                 });
 
@@ -144,5 +139,11 @@ public class ProfileFragment extends Fragment {
         MySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest2);
 
         return v;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        attached = false;
     }
 }

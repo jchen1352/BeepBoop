@@ -22,17 +22,17 @@ public class QRCodeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_qrcode, container, false);
-        ImageView imageView = v.findViewById(R.id.qrcode);
-        String text = "blah"; // Whatever you need to encode in the QR code
-        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-        try {
-            BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.QR_CODE,200,200);
-            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
-            imageView.setImageBitmap(bitmap);
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
+//        ImageView imageView = v.findViewById(R.id.qrcode);
+//        String text = "blah"; // Whatever you need to encode in the QR code
+//        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+//        try {
+//            BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.QR_CODE,200,200);
+//            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+//            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+//            imageView.setImageBitmap(bitmap);
+//        } catch (WriterException e) {
+//            e.printStackTrace();
+//        }
         return v;
     }
 }

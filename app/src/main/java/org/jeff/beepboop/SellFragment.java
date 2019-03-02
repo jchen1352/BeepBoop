@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -44,6 +46,8 @@ public class SellFragment extends Fragment {
         Button b = v.findViewById(R.id.sell_button);
         final EditText creditEdit = v.findViewById(R.id.credit_edit);
         final EditText moneyEdit = v.findViewById(R.id.money_edit);
+        TextView creditIcon = v.findViewById(R.id.sell_credit_icon);
+        creditIcon.setTypeface(FontManager.getTypeface(v.getContext(), FontManager.FONTAWESOME));
         //moneyEdit.addTextChangedListener(new MoneyTextWatcher(moneyEdit));
         SharedPreferences prefs = context.getSharedPreferences(getString(R.string.pref_key), Context.MODE_PRIVATE);
         final String userid = prefs.getString(getString(R.string.pref_user), "fail");
@@ -95,7 +99,16 @@ public class SellFragment extends Fragment {
 
                             }
                         });
-                AlertDialog dialog = builder.create();
+                final AlertDialog dialog = builder.create();
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialogInterface) {
+                        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(
+                                ResourcesCompat.getColor(context.getResources(), R.color.IndianRed, null));
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(
+                                ResourcesCompat.getColor(context.getResources(), R.color.Green, null));
+                    }
+                });
                 dialog.show();
             }
         });

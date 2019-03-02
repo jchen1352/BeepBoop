@@ -3,6 +3,7 @@ package org.jeff.beepboop;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +25,26 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.transaction_item, parent, false);
         }
+        TextView icon = convertView.findViewById(R.id.transaction_icon);
+        icon.setTypeface(FontManager.getTypeface(convertView.getContext(), FontManager.FONTAWESOME));
+        icon.setText(convertView.getContext().getResources().getText(R.string.transaction_arrow));
+
         TextView creditsView = convertView.findViewById(R.id.credits);
         TextView moneyView = convertView.findViewById(R.id.money);
         TextView statusView = convertView.findViewById(R.id.status);
         creditsView.setText(Integer.toString(transaction.credits));
-        moneyView.setText(String.format("$%d", transaction.cash));
+        moneyView.setText(String.format("$ %d", transaction.cash));
         statusView.setText(transaction.status);
+
+        switch (transaction.status) {
+            case "FOR_SALE":
+                statusView.setText("For Sale");
+                statusView.setTextColor(ResourcesCompat.getColor(convertView.getContext().getResources(), R.color.IndianRed, null));
+            break;
+            // TODO: add other cases
+            default:
+                statusView.setText("");
+        }
         return convertView;
     }
 }

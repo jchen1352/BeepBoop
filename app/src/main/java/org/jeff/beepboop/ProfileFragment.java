@@ -49,6 +49,10 @@ public class ProfileFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_profile, container, false);
         TextView name = v.findViewById(R.id.profile_name);
+        TextView profileIcon = v.findViewById(R.id.profile_icon);
+        profileIcon.setTypeface(FontManager.getTypeface(v.getContext(), FontManager.FONTAWESOME));
+        TextView logout = v.findViewById(R.id.logout);
+        logout.setTypeface(FontManager.getTypeface(v.getContext(), FontManager.FONTAWESOME));
 
         final ListView lv = v.findViewById(R.id.transaction_history);
 

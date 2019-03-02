@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,7 +101,7 @@ public class BuyFragment extends Fragment {
                 final Transaction transaction = transactions.get(position);
                 int dollars = transaction.cash;
                 int credits = transaction.credits;
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                AlertDialog.Builder builder =  new AlertDialog.Builder(context);
                 builder.setMessage(getString(R.string.buy_dialog, credits, dollars))
                         .setPositiveButton(R.string.dialog_confirm, new DialogInterface.OnClickListener() {
                             @Override
@@ -139,7 +141,16 @@ public class BuyFragment extends Fragment {
 
                             }
                         });
-                AlertDialog dialog = builder.create();
+                final AlertDialog dialog = builder.create();
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialogInterface) {
+                        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(
+                                ResourcesCompat.getColor(context.getResources(), R.color.IndianRed, null));
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(
+                                ResourcesCompat.getColor(context.getResources(), R.color.Green, null));
+                    }
+                });
                 dialog.show();
             }
         });

@@ -41,7 +41,10 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
                 statusView.setText("For sale");
                 statusView.setTextColor(ResourcesCompat.getColor(convertView.getContext().getResources(), R.color.IndianRed, null));
             break;
-            // TODO: add other cases
+            case "SOLD":
+                statusView.setText("Sold");
+                statusView.setTextColor(ResourcesCompat.getColor(convertView.getContext().getResources(), R.color.Green, null));
+            break;
             default:
                 statusView.setText("");
         }

@@ -1,6 +1,7 @@
 package org.jeff.beepboop;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,6 +34,8 @@ import java.util.Date;
 
 import javax.security.auth.login.LoginException;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class ProfileFragment extends Fragment {
 
     private Context context;
@@ -45,6 +48,30 @@ public class ProfileFragment extends Fragment {
         attached = true;
     }
 
+    private void logout() {
+
+
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // remove shared preference userId from
+                if (getActivity() != null) {
+                    SharedPreferences prefs = getActivity().getSharedPreferences(getString(R.string.pref_key), MODE_PRIVATE);
+                    prefs.edit().remove(getActivity().getString(R.string.pref_user)).commit();
+
+                    // open splash activity and clear activity stack
+                    Intent intent = new Intent(getActivity(), SplashActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+            }
+        });
+
+
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -53,14 +80,22 @@ public class ProfileFragment extends Fragment {
         TextView name = v.findViewById(R.id.profile_name);
         TextView profileIcon = v.findViewById(R.id.profile_icon);
         profileIcon.setTypeface(FontManager.getTypeface(v.getContext(), FontManager.FONTAWESOME));
-        TextView logout = v.findViewById(R.id.logout);
-        logout.setTypeface(FontManager.getTypeface(v.getContext(), FontManager.FONTAWESOME));
 
         final ListView lv = v.findViewById(R.id.transaction_history);
 
-        SharedPreferences prefs = context.getSharedPreferences(getString(R.string.pref_key), Context.MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences(getString(R.string.pref_key), MODE_PRIVATE);
         final String id = prefs.getString(getString(R.string.pref_user), "hmm");
         name.setText(id);
+
+        TextView logout = v.findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+            }
+        });
+
+        logout.setTypeface(FontManager.getTypeface(v.getContext(), FontManager.FONTAWESOME));
 
         final ArrayList<Transaction> transactions = new ArrayList<>(); // ALL LOGS
         final TransactionAdapter adapter = new TransactionAdapter(context, R.layout.transaction_item, transactions);
@@ -105,10 +140,9 @@ public class ProfileFragment extends Fragment {
 
         lv.setAdapter(adapter);
 
+        // Set balance
         final TextView balance = v.findViewById(R.id.balance);
         final TextView credits = v.findViewById(R.id.credits);
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(context);
         String url ="http://beepboop.eastus.cloudapp.azure.com:3000/api/BeepBoopAccount/" + id;
 
         JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest

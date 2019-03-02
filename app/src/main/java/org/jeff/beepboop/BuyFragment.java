@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -111,12 +112,15 @@ public class BuyFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String salesListingIdURL = "http://beepboop.eastus.cloudapp.azure.com:3000/api/Buy";
+                                String creditListingPrefix = "org.acme.vehicle.auction.CreditListing#";
+                                String beepBoopAccountPrefix = "org.acme.vehicle.auction.BeepBoopAccount#";
+
                                 JSONObject objRequest = new JSONObject();
                                 try {
                                     Log.d("DEBUG_THIS", "onClick: buyerAccount = " + userid + " listing = " + transaction.listingId);
                                     objRequest.put("$class", "org.acme.vehicle.auction.Buy");
-                                    objRequest.put("buyerAccount", userid);
-                                    objRequest.put("listing", transaction.listingId);
+                                    objRequest.put("buyerAccount", beepBoopAccountPrefix + userid);
+                                    objRequest.put("listing", creditListingPrefix + transaction.listingId);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -126,6 +130,8 @@ public class BuyFragment extends Fragment {
                                             @Override
                                             public void onResponse(JSONObject response) {
                                                 Log.d("asdf", "Buy completed");
+                                                Toast.makeText(BuyFragment.this.getContext(),
+                                                        "Purchase complete!", Toast.LENGTH_SHORT).show();
                                             }
                                         }, new Response.ErrorListener() {
 

@@ -61,11 +61,12 @@ public class SellFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String salesListingIdURL = "http://beepboop.eastus.cloudapp.azure.com:3000/api/CreditListing";
+                                String beepBoopAccountPrefix = "org.acme.vehicle.auction.BeepBoopAccount#";
                                 JSONObject objRequest = new JSONObject();
                                 try {
                                     objRequest.put("$class", "org.acme.vehicle.auction.CreditListing");
                                     objRequest.put("listingId", (new Date()).toString() + userid);
-                                    objRequest.put("sellerAccount", userid);
+                                    objRequest.put("sellerAccount", beepBoopAccountPrefix + userid);
                                     objRequest.put("price", moneyEdit.getText().toString());
                                     objRequest.put("numCredits", creditEdit.getText().toString());
                                     objRequest.put("state", "FOR_SALE");
@@ -78,7 +79,7 @@ public class SellFragment extends Fragment {
                                             @Override
                                             public void onResponse(JSONObject response) {
                                                 Log.d("asdf", "Credit Listing posted");
-                                                Toast.makeText(context, "Credit Listing Posted!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(context, "Credit listing posted!", Toast.LENGTH_SHORT).show();
                                             }
                                         }, new Response.ErrorListener() {
 

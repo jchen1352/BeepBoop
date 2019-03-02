@@ -164,8 +164,6 @@ public class LoginActivity extends AppCompatActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            //mAuthTask = new UserLoginTask(email, password);
-            //mAuthTask.execute((Void) null);
             final String url = "http://beepboop.eastus.cloudapp.azure.com:3000/api/BeepBoopAccount/";
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url + email, null,
                     new Response.Listener<JSONObject>() {
@@ -182,7 +180,6 @@ public class LoginActivity extends AppCompatActivity {
                     JSONObject objRequest = new JSONObject();
                     try {
                         objRequest.put("accountId", email);
-                        objRequest.put("owner", email);
                         objRequest.put("creditBalance", 1000);
                         objRequest.put("cashBalance", 1000);
                     } catch (JSONException e) {

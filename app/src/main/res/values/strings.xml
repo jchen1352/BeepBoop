@@ -5,8 +5,8 @@
     <string name="qrcode">QR Code</string>
     <string name="buy">Buy</string>
     <string name="sell">Sell</string>
-    <string name="balance">Balance: $%1$d</string>
-    <string name="credits">Credits: %1$d</string>
+    <string name="balance">$ %1$d</string>
+    <string name="credits">%1$d</string>
     <string name="buy_dialog">Buy %1$d credits for $%2$d?</string>
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_cancel">Cancel</string>
@@ -26,4 +26,9 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="coins_icon">&#xf51e;</string>
+    <string name="transaction_arrow">&#xf07a;</string>
+    <string name="profile_icon">&#xf007;</string>
+    <string name="logout">&#xf2f5;</string>
+    <string name="past_transactions"><u>Past Transactions</u></string>
 </resources>

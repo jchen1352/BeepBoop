@@ -6,6 +6,8 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +32,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -69,6 +72,8 @@ public class LoginActivity extends AppCompatActivity {
     private UserLoginTask mAuthTask = null;
 
     // UI references.
+    private ImageView imageView;
+    private Bitmap splashBitmap;
     private EditText mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
@@ -78,6 +83,13 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // set up image
+        imageView = (ImageView) findViewById(R.id.login_symbol);
+        splashBitmap = BitmapFactory.decodeResource(getResources(),
+                R.drawable.beep_boop_logo);
+        imageView.setImageBitmap(Bitmap.createScaledBitmap(splashBitmap, 600, 600, false));
+
         // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.email);
 
@@ -152,8 +164,6 @@ public class LoginActivity extends AppCompatActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            //mAuthTask = new UserLoginTask(email, password);
-            //mAuthTask.execute((Void) null);
             final String url = "http://beepboop.eastus.cloudapp.azure.com:3000/api/BeepBoopAccount/";
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url + email, null,
                     new Response.Listener<JSONObject>() {
@@ -170,7 +180,6 @@ public class LoginActivity extends AppCompatActivity {
                     JSONObject objRequest = new JSONObject();
                     try {
                         objRequest.put("accountId", email);
-                        objRequest.put("owner", email);
                         objRequest.put("creditBalance", 1000);
                         objRequest.put("cashBalance", 1000);
                     } catch (JSONException e) {

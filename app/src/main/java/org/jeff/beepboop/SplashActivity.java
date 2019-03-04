@@ -65,7 +65,7 @@ public class SplashActivity extends AppCompatActivity {
         splashIcon = (ImageView) findViewById(R.id.splashIcon);
         splashBitmap = BitmapFactory.decodeResource(getResources(),
                 R.drawable.beep_boop_logo);
-        splashIcon.setImageBitmap(Bitmap.createScaledBitmap(splashBitmap, 360, 360, false));
+        splashIcon.setImageBitmap(Bitmap.createScaledBitmap(splashBitmap, 800, 800, false));
     }
 
     @Override

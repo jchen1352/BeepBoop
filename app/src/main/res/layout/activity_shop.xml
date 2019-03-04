@@ -19,7 +19,8 @@
             <android.support.design.widget.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/buy" />
+                android:text="@string/buy"
+                />
 
             <android.support.design.widget.TabItem
                 android:layout_width="wrap_content"

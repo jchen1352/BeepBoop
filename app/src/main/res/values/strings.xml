@@ -10,7 +10,7 @@
     <string name="buy_dialog">Buy %1$d credits for $%2$d?</string>
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_cancel">Cancel</string>
-    <string name="sell_dialog">Sell %1$s credits for %2$s?</string>
+    <string name="sell_dialog">Sell %1$s credits for $%2$s?</string>
     <string name="pref_key">Prefs</string>
     <string name="pref_user">Pref_User</string>
     <string name="title_activity_login">Sign in</string>
@@ -31,4 +31,9 @@
     <string name="profile_icon">&#xf007;</string>
     <string name="logout">&#xf2f5;</string>
     <string name="past_transactions"><u>Past Transactions</u></string>
+    <string name="sell_error_credits">Error: Cannot sell 0 credits</string>
+    <string name="sell_error_empty">Error: %1$s field is empty</string>
+    <string name="sell_error_credits2">Error: Not enough credits</string>
+    <string name="buy_error_money">Error: Not enough money in balance</string>
+    <string name="buy_error_invalid">Error: Could not complete transaction</string>
 </resources>

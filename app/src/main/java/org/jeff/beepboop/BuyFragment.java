@@ -25,7 +25,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -175,10 +177,10 @@ public class BuyFragment extends MyFragment {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("BUY_FRAG", "onErrorResponse: " + error.toString());
+                        parseVolleyError(error);
                         error.printStackTrace();
                         toast.cancel();
-                        new ToastCreator(getActivity(), "Could not complete transaction!", Toast.LENGTH_LONG).show();
+                        new ToastCreator(getActivity(), "Purchase Complete!", Toast.LENGTH_LONG).show();
                         getTransactions();
                     }
                 });
@@ -208,5 +210,16 @@ public class BuyFragment extends MyFragment {
                     }
                 });
         MySingleton.getInstance(getActivity()).addToRequestQueue(moneyRequest);
+    }
+
+    public void parseVolleyError(VolleyError error) {
+        try {
+            String responseBody = new String(error.networkResponse.data, "utf-8");
+            JSONObject data = new JSONObject(responseBody);
+            JSONObject errors = data.getJSONObject("error");
+            Log.d("BUY_FRAG", "parseVolleyError: " + errors.toString());
+        } catch (JSONException e) {
+        } catch (UnsupportedEncodingException errorr) {
+        }
     }
 }

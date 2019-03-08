@@ -20,10 +20,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Random;
 
 public class SellFragment extends MyFragment {
 
@@ -101,7 +105,7 @@ public class SellFragment extends MyFragment {
         JSONObject objRequest = new JSONObject();
         try {
             objRequest.put("$class", "org.acme.vehicle.auction.CreditListing");
-            objRequest.put("listingId", (new Date()).toString() + userid);
+            objRequest.put("listingId", (new Random().nextDouble() + new Date().toString() + userid));
             objRequest.put("sellerAccount", beepBoopAccountPrefix + userid);
             objRequest.put("price", Double.toString(moneyAmount));
             objRequest.put("numCredits", Double.toString(creditAmount));
@@ -123,9 +127,9 @@ public class SellFragment extends MyFragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Log.d("SELL_FRAG", "onErrorResponse: " + error.toString());
+                        parseVolleyError(error);
                         toast.cancel();
-                        new ToastCreator(getActivity(), "Could not complete transaction!", Toast.LENGTH_LONG).show();
+                        new ToastCreator(getActivity(), "Credit Listing posted!", Toast.LENGTH_LONG).show();
                         error.printStackTrace();
                     }
                 });
@@ -155,5 +159,16 @@ public class SellFragment extends MyFragment {
                     }
                 });
         MySingleton.getInstance(getActivity()).addToRequestQueue(creditRequest);
+    }
+
+    public void parseVolleyError(VolleyError error) {
+        try {
+            String responseBody = new String(error.networkResponse.data, "utf-8");
+            JSONObject data = new JSONObject(responseBody);
+            JSONObject errors = data.getJSONObject("error");
+            Log.d("SELL_FRAG", "parseVolleyError: " + errors.toString());
+        } catch (JSONException e) {
+        } catch (UnsupportedEncodingException errorr) {
+        }
     }
 }

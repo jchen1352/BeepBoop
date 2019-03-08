@@ -47,20 +47,18 @@ public class SellFragment extends MyFragment {
                 final String money = moneyEdit.getText().toString();
                 final String credits = creditEdit.getText().toString();
                 final double creditAmount;
-                AlertDialog.Builder errorDialog = new AlertDialog.Builder(context);
-                errorDialog.setPositiveButton("OK", null);
                 try {
                     creditAmount = Integer.parseInt(credits);
                     if (creditAmount <= 0) {
-                        errorDialog.setMessage(R.string.sell_error_credits).create().show();
+                        Toast.makeText(context, R.string.sell_error_credits, Toast.LENGTH_SHORT).show();
                         return;
                     }
                 } catch (NumberFormatException e) {
-                    errorDialog.setMessage(getString(R.string.sell_error_empty, "Credits")).create().show();
+                    Toast.makeText(context, getString(R.string.sell_error_empty, "Credits"), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (money.equals("")) {
-                    errorDialog.setMessage(getString(R.string.sell_error_empty, "Money")).create().show();
+                    Toast.makeText(context, getString(R.string.sell_error_empty, "Money"), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 final double moneyAmount = Integer.parseInt(money);

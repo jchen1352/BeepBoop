@@ -32,6 +32,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.1"
+        app:itemTextColor="@color/bottom_nav"
+        app:itemIconTint="@color/bottom_nav"
         app:menu="@menu/navigation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

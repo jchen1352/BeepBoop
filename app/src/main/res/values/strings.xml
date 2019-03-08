@@ -31,9 +31,10 @@
     <string name="profile_icon">&#xf007;</string>
     <string name="logout">&#xf2f5;</string>
     <string name="past_transactions"><u>Past Transactions</u></string>
-    <string name="sell_error_credits">Error: Cannot sell 0 credits</string>
-    <string name="sell_error_empty">Error: %1$s field is empty</string>
-    <string name="sell_error_credits2">Error: Not enough credits</string>
-    <string name="buy_error_money">Error: Not enough money in balance</string>
-    <string name="buy_error_invalid">Error: Could not complete transaction</string>
+    <string name="sell_error_credits">Cannot sell 0 credits!</string>
+    <string name="sell_error_empty">%1$s field is empty!</string>
+    <string name="sell_error_credits2">Not enough credits!</string>
+    <string name="buy_error_money">Not enough money in balance!</string>
+    <string name="buy_error_invalid">Could not complete transaction!</string>
+    <string name="no_connection">No Internet Connection\nPlease check your Internet and reopen app</string>
 </resources>

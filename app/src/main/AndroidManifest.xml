@@ -11,28 +11,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeDark">
-
-        <activity android:name=".SplashActivity"
-            android:screenOrientation="portrait"
+        <activity android:name=".Walkthrough.IntroActivity"></activity>
+        <activity android:name=".Walkthrough.IntroActivity"></activity>
+        <activity
+            android:name=".SplashActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"
-            android:screenOrientation="portrait"
+        <activity
+            android:name=".LoginActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name">
-        </activity>
-        <activity android:name=".MainActivity"
-            android:screenOrientation="portrait"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustNothing"
-            android:label="@string/app_name">
-        </activity>
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing" />
     </application>
 
 </manifest>

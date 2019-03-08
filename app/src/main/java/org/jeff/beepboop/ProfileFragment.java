@@ -30,6 +30,8 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 import javax.security.auth.login.LoginException;
@@ -49,9 +51,6 @@ public class ProfileFragment extends Fragment {
     }
 
     private void logout() {
-
-
-
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -121,6 +120,20 @@ public class ProfileFragment extends Fragment {
                                         adapter.notifyDataSetChanged();
                                     }
                                 }
+                                Collections.sort(transactions, new Comparator<Transaction>() {
+                                    @Override
+                                    public int compare(Transaction transaction, Transaction t1) {
+                                        if (transaction.status.equals(t1.status)) {
+                                            return Integer.compare(transaction.credits, t1.credits);
+                                        } else if (transaction.status.equals("FOR_SALE")) {
+                                            return -1;
+                                        } else if (transaction.status.equals("SOLD")) {
+                                            return 1;
+                                        }
+                                        return 0;
+                                    }
+                                });
+                                adapter.notifyDataSetChanged();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

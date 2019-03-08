@@ -60,6 +60,9 @@ public class SellFragment extends Fragment {
                         .setPositiveButton(R.string.dialog_confirm, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                final ToastCreator toastCreator = new ToastCreator(SellFragment.this.getContext(), "Processing...", Toast.LENGTH_SHORT);
+                                toastCreator.show();
+
                                 String salesListingIdURL = "http://beepboop.eastus.cloudapp.azure.com:3000/api/CreditListing";
                                 String beepBoopAccountPrefix = "org.acme.vehicle.auction.BeepBoopAccount#";
                                 JSONObject objRequest = new JSONObject();
@@ -79,13 +82,16 @@ public class SellFragment extends Fragment {
                                             @Override
                                             public void onResponse(JSONObject response) {
                                                 Log.d("asdf", "Credit Listing posted");
-                                                Toast.makeText(context, "Credit listing posted!", Toast.LENGTH_SHORT).show();
+                                                toastCreator.cancel();
+                                                new ToastCreator(context, "Credit Listing posted!", Toast.LENGTH_SHORT).show();
                                             }
                                         }, new Response.ErrorListener() {
 
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
                                                 // TODO: Handle error
+                                                toastCreator.cancel();
+                                                new ToastCreator(context, "An error occurred. Please try again later", Toast.LENGTH_SHORT).show();
                                                 error.printStackTrace();
                                             }
                                         });

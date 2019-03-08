@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Walkthrough.WalkthroughSlideFive">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:layout_gravity="center_horizontal"
+        android:fillViewport="true"
+        android:fadeScrollbars="false"
+        android:gravity="center_horizontal">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:padding="16dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_margin="8dp"
+                android:textSize="22sp"
+                android:textColor="@color/DarkCyan"
+                android:text="Everyone Benefits"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+
+            <ImageView
+                android:layout_margin="8dp"
+                android:id="@+id/slide_five_image_one"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:textColor="@color/NavajoWhite"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:text="Our reward system allows users \nto gain from their eco-efforts." />
+
+
+            <ImageView
+                android:layout_margin="8dp"
+                android:id="@+id/slide_five_image_two"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="8dp"
+                android:gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:textColor="@color/NavajoWhite"
+                android:text="Beep Boop allows for \ntraffic decongestion." />
+
+            <ImageView
+                android:layout_margin="8dp"
+                android:id="@+id/slide_five_image_three"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:textColor="@color/NavajoWhite"
+                android:text="The blockchain ensures \ndistributed consensus \nprovenance and scalability." />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/slide_five_get_started"
+        android:background="@drawable/rounded_corners"
+        android:textSize="16sp"
+        android:text="Get Started"
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp" />
+</LinearLayout>

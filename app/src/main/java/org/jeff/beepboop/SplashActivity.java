@@ -3,15 +3,19 @@ package org.jeff.beepboop;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+
+import org.jeff.beepboop.Walkthrough.IntroActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -38,11 +42,14 @@ public class SplashActivity extends AppCompatActivity {
 
     public void redirectUser() {
         SharedPreferences prefs = getSharedPreferences(getString(R.string.pref_key), Context.MODE_PRIVATE);
-        if (prefs.contains(getString(R.string.pref_user))) {
+        //TODO: change this
+        if (!prefs.contains(getString(R.string.pref_install))) {
+            Intent intent = new Intent(this, IntroActivity.class);
+            startActivity(intent);
+        } else if (prefs.contains(getString(R.string.pref_user))) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-        }
-        else {
+        } else {
             Intent intent = new Intent(this, LoginActivity.class); // replace with login activity
             startActivity(intent);
         }
@@ -93,5 +100,10 @@ public class SplashActivity extends AppCompatActivity {
             splashBitmap.recycle();
             splashBitmap = null;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 }

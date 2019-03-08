@@ -307,5 +307,10 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(false);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 }
 

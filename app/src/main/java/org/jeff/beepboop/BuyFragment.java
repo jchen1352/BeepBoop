@@ -29,6 +29,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 public class BuyFragment extends Fragment {
@@ -83,6 +85,13 @@ public class BuyFragment extends Fragment {
                                         });
                                     }
                                 }
+                                Collections.sort(transactions, new Comparator<Transaction>() {
+                                    @Override
+                                    public int compare(Transaction transaction, Transaction t1) {
+                                        return Integer.compare(transaction.cash, t1.cash);
+                                    }
+                                });
+                                adapter.notifyDataSetChanged();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -111,6 +120,9 @@ public class BuyFragment extends Fragment {
                         .setPositiveButton(R.string.dialog_confirm, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                final ToastCreator toastCreator = new ToastCreator(BuyFragment.this.getContext(), "Processing...", Toast.LENGTH_SHORT);
+                                toastCreator.show();
+
                                 String salesListingIdURL = "http://beepboop.eastus.cloudapp.azure.com:3000/api/Buy";
                                 String creditListingPrefix = "org.acme.vehicle.auction.CreditListing#";
                                 String beepBoopAccountPrefix = "org.acme.vehicle.auction.BeepBoopAccount#";
@@ -130,14 +142,15 @@ public class BuyFragment extends Fragment {
                                             @Override
                                             public void onResponse(JSONObject response) {
                                                 Log.d("asdf", "Buy completed");
-                                                Toast.makeText(BuyFragment.this.getContext(),
-                                                        "Purchase complete!", Toast.LENGTH_SHORT).show();
+                                                toastCreator.cancel();
+                                                new ToastCreator(BuyFragment.this.getContext(), "Purchase Complete!", Toast.LENGTH_SHORT).show();
                                             }
                                         }, new Response.ErrorListener() {
 
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
                                                 // TODO: Handle error
+                                                new ToastCreator(BuyFragment.this.getContext(), "An error occurred. Please try again later", Toast.LENGTH_SHORT).show();
                                                 error.printStackTrace();
                                             }
                                         });

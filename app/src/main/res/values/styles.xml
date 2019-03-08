@@ -9,9 +9,8 @@
     </style>
 
     <style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:background">@color/DarkGray</item>
-        <item name="colorPrimary">@color/DarkCyan</item>
-        <!--<item name="colorPrimaryDark">@color/DarkGray</item>-->
+        <item name="colorPrimary">@color/DarkGray</item>
+        <item name="colorPrimaryDark">@color/DarkGray</item>
         <item name="colorAccent">@color/DodgerBlue</item>
         <item name="android:textColor">@color/white</item>
     </style>

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 
 import org.jeff.beepboop.LoginActivity;
 import org.jeff.beepboop.R;
+import org.jeff.beepboop.SplashActivity;
 
 public class WalkthroughSlideFive extends Fragment {
 
@@ -68,7 +69,7 @@ public class WalkthroughSlideFive extends Fragment {
                     if (getActivity() != null) {
                         SharedPreferences prefs = getActivity().getSharedPreferences(getString(R.string.pref_key), Context.MODE_PRIVATE);
                         prefs.edit().putBoolean(getString(R.string.pref_install), true).apply();
-                        Intent intent = new Intent(getActivity().getBaseContext(), LoginActivity.class);
+                        Intent intent = new Intent(getActivity().getBaseContext(), SplashActivity.class);
                         startActivity(intent);
                     }
                 }

@@ -147,19 +147,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Vending History"
+            android:layout_marginBottom="8dp"
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
             android:textSize="22sp"/>
 
-        <ListView
-            android:id="@+id/transaction_history"
-            android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_weight="5">
-        </ListView>
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/profile_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+            <ListView
+                android:fadeScrollbars="false"
+                android:id="@+id/transaction_history"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_weight="5"
+                android:background="@drawable/back"
+                android:padding="5dp">
+            </ListView>
+        </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
 
 </RelativeLayout>

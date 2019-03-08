@@ -90,7 +90,7 @@
                 android:layout_weight="1"
                 android:textSize="18sp"
                 android:textColor="@color/NavajoWhite"
-                android:text="The blockchain ensures \ndistributed consensus \nprovenance and scalability." />
+                android:text="The blockchain ensures \ndistributed consensus, \nprovenance and scalability." />
 
         </LinearLayout>
     </ScrollView>

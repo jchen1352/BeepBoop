@@ -20,12 +20,9 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 public class QRCodeFragment extends Fragment {
 
-    private Context context;
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.context = context;
     }
 
     @Nullable

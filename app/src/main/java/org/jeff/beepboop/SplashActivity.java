@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
@@ -38,7 +40,13 @@ public class SplashActivity extends AppCompatActivity {
 
     public void redirectUser() {
         SharedPreferences prefs = getSharedPreferences(getString(R.string.pref_key), Context.MODE_PRIVATE);
-        if (prefs.contains(getString(R.string.pref_user))) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if (!(activeNetworkInfo != null && activeNetworkInfo.isConnected())) {
+            Intent intent = new Intent(this, NoConnectionActivity.class);
+            startActivity(intent);
+        }
+        else if (prefs.contains(getString(R.string.pref_user))) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }

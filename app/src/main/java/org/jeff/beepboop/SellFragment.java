@@ -28,15 +28,7 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
-public class SellFragment extends Fragment {
-
-    private Context context;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
+public class SellFragment extends MyFragment {
 
     @Nullable
     @Override
@@ -49,49 +41,34 @@ public class SellFragment extends Fragment {
         TextView creditIcon = v.findViewById(R.id.sell_credit_icon);
         creditIcon.setTypeface(FontManager.getTypeface(v.getContext(), FontManager.FONTAWESOME));
         //moneyEdit.addTextChangedListener(new MoneyTextWatcher(moneyEdit));
-        SharedPreferences prefs = context.getSharedPreferences(getString(R.string.pref_key), Context.MODE_PRIVATE);
-        final String userid = prefs.getString(getString(R.string.pref_user), "fail");
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final String money = moneyEdit.getText().toString();
+                final String credits = creditEdit.getText().toString();
+                final double creditAmount;
+                try {
+                    creditAmount = Integer.parseInt(credits);
+                    if (creditAmount <= 0) {
+                        Toast.makeText(context, R.string.sell_error_credits, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                } catch (NumberFormatException e) {
+                    Toast.makeText(context, getString(R.string.sell_error_empty, "Credits"), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (money.equals("")) {
+                    Toast.makeText(context, getString(R.string.sell_error_empty, "Money"), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                final double moneyAmount = Integer.parseInt(money);
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage(getString(R.string.sell_dialog, creditEdit.getText().toString(),
                         moneyEdit.getText().toString()))
                         .setPositiveButton(R.string.dialog_confirm, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                String salesListingIdURL = "http://beepboop.eastus.cloudapp.azure.com:3000/api/CreditListing";
-                                String beepBoopAccountPrefix = "org.acme.vehicle.auction.BeepBoopAccount#";
-                                JSONObject objRequest = new JSONObject();
-                                try {
-                                    objRequest.put("$class", "org.acme.vehicle.auction.CreditListing");
-                                    objRequest.put("listingId", (new Date()).toString() + userid);
-                                    objRequest.put("sellerAccount", beepBoopAccountPrefix + userid);
-                                    objRequest.put("price", moneyEdit.getText().toString());
-                                    objRequest.put("numCredits", creditEdit.getText().toString());
-                                    objRequest.put("state", "FOR_SALE");
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                                JsonObjectRequest jsonObjectRequest0 = new JsonObjectRequest
-                                        (Request.Method.POST, salesListingIdURL, objRequest, new Response.Listener<JSONObject>() {
-                                            @Override
-                                            public void onResponse(JSONObject response) {
-                                                Log.d("asdf", "Credit Listing posted");
-                                                Toast.makeText(context, "Credit listing posted!", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }, new Response.ErrorListener() {
-
-                                            @Override
-                                            public void onErrorResponse(VolleyError error) {
-                                                // TODO: Handle error
-                                                error.printStackTrace();
-                                            }
-                                        });
-
-                                // Access the RequestQueue through your singleton class.
-                                MySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest0);
+                                makeSellRequest(moneyAmount, creditAmount);
                             }
                         })
                         .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
@@ -114,5 +91,63 @@ public class SellFragment extends Fragment {
             }
         });
         return v;
+    }
+
+    private void makeSellRequest(double moneyAmount, final double creditAmount) {
+        String salesListingIdURL = "http://beepboop.eastus.cloudapp.azure.com:3000/api/CreditListing";
+        String beepBoopAccountPrefix = "org.acme.vehicle.auction.BeepBoopAccount#";
+        JSONObject objRequest = new JSONObject();
+        try {
+            objRequest.put("$class", "org.acme.vehicle.auction.CreditListing");
+            objRequest.put("listingId", (new Date()).toString() + userid);
+            objRequest.put("sellerAccount", beepBoopAccountPrefix + userid);
+            objRequest.put("price", Double.toString(moneyAmount));
+            objRequest.put("numCredits", Double.toString(creditAmount));
+            objRequest.put("state", "FOR_SALE");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        final JsonObjectRequest jsonObjectRequest0 = new JsonObjectRequest
+                (Request.Method.POST, salesListingIdURL, objRequest, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("asdf", "Credit Listing posted");
+                        Toast.makeText(context, "Credit listing posted!", Toast.LENGTH_SHORT).show();
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        error.printStackTrace();
+                    }
+                });
+        String url ="http://beepboop.eastus.cloudapp.azure.com:3000/api/BeepBoopAccount/" + userid;
+        JsonObjectRequest creditRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            double c = response.getDouble("creditBalance");
+                            if (attached && c < creditAmount) {
+                                Toast.makeText(context, R.string.sell_error_credits2, Toast.LENGTH_SHORT).show();
+                            } else {
+                                // Access the RequestQueue through your singleton class.
+                                MySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest0);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        error.printStackTrace();
+                    }
+                });
+        MySingleton.getInstance(context).addToRequestQueue(creditRequest);
     }
 }

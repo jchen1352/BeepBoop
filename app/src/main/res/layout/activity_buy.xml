@@ -4,10 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/buylist"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
+        android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/buylist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </ListView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
 </LinearLayout>

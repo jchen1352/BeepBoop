@@ -91,6 +91,9 @@ public class SellFragment extends MyFragment {
                     }
                 });
                 dialog.show();
+                if (dialog.getWindow() != null) {
+                    dialog.getWindow().setBackgroundDrawableResource(R.drawable.box1);
+                }
             }
         });
         return v;

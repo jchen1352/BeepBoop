@@ -314,10 +314,14 @@ public class LoginActivity extends AppCompatActivity {
 
     public void parseVolleyError(VolleyError error) {
         try {
-            String responseBody = new String(error.networkResponse.data, "utf-8");
-            JSONObject data = new JSONObject(responseBody);
-            JSONObject errors = data.getJSONObject("error");
-            Log.d("LOGIN", "parseVolleyError: " + errors.toString());
+            if (error != null && error.networkResponse != null) {
+                String responseBody = new String(error.networkResponse.data, "utf-8");
+                JSONObject data = new JSONObject(responseBody);
+                JSONObject errors = data.getJSONObject("error");
+                Log.d("LOGIN", "parseVolleyError: " + errors.toString());
+            } else {
+                Log.d("LOGIN", "parseVolleyError: error / networkResponse data is null");
+            }
         } catch (JSONException e) {
         } catch (UnsupportedEncodingException errorr) {
         }

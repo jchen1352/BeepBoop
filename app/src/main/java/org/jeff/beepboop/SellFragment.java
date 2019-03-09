@@ -53,15 +53,15 @@ public class SellFragment extends MyFragment {
                 try {
                     creditAmount = Integer.parseInt(credits);
                     if (creditAmount <= 0) {
-                        new ToastCreator(getActivity(), "Cannot sell 0 credits!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Cannot sell 0 credits!", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 } catch (NumberFormatException e) {
-                    new ToastCreator(getActivity(), "Credits field is empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Credits field is empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (money.equals("")) {
-                    new ToastCreator(getActivity(), "Money field is empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Money field is empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 final double moneyAmount = Integer.parseInt(money);
@@ -102,7 +102,7 @@ public class SellFragment extends MyFragment {
     }
 
     private void makeSellRequest(double moneyAmount, final double creditAmount) {
-        final ToastCreator toast = new ToastCreator(getActivity(), "Processing...", Toast.LENGTH_SHORT);
+        final Toast toast = Toast.makeText(getActivity(), "Processing...", Toast.LENGTH_SHORT);
         toast.show();
 
         String salesListingIdURL = "http://beepboop.eastus.cloudapp.azure.com:3000/api/CreditListing";
@@ -131,7 +131,7 @@ public class SellFragment extends MyFragment {
                         }
                         if (attached) {
                             toast.cancel();
-                            new ToastCreator(getActivity(), "Credit listing posted!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Credit listing posted!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -143,7 +143,7 @@ public class SellFragment extends MyFragment {
                         error.printStackTrace();
                         if (attached) {
                             toast.cancel();
-                            new ToastCreator(getActivity(), "Could not complete transaction!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Could not complete transaction!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -156,7 +156,7 @@ public class SellFragment extends MyFragment {
                         try {
                             double c = response.getDouble("creditBalance");
                             if (attached && c < creditAmount) {
-                                new ToastCreator(getActivity(), "Not enough credits!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Not enough credits!", Toast.LENGTH_SHORT).show();
                             } else {
                                 // Access the RequestQueue through your singleton class.
                                 MySingleton.getInstance(getActivity()).addToRequestQueue(jsonObjectRequest0);

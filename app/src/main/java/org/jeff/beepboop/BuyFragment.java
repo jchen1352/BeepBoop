@@ -28,7 +28,6 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -155,7 +154,7 @@ public class BuyFragment extends MyFragment {
     }
 
     private void tryBuy(final double moneyAmount, Transaction transaction) {
-        final ToastCreator toast = new ToastCreator(getActivity(), "Processing...", Toast.LENGTH_SHORT);
+        final Toast toast = Toast.makeText(getActivity(), "Processing...", Toast.LENGTH_SHORT);
         toast.show();
 
         String salesListingIdURL = "http://beepboop.eastus.cloudapp.azure.com:3000/api/Buy";
@@ -179,7 +178,7 @@ public class BuyFragment extends MyFragment {
                         Log.d("asdf", "Buy completed");
                         if (attached) {
                             toast.cancel();
-                            new ToastCreator(getActivity(), "Purchase Complete!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Purchase Complete!", Toast.LENGTH_SHORT).show();
                             getTransactions();
                         }
                     }
@@ -190,7 +189,7 @@ public class BuyFragment extends MyFragment {
                         error.printStackTrace();
                         if (attached) {
                             toast.cancel();
-                            new ToastCreator(getActivity(), "Could not complete transaction!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Could not complete transaction!", Toast.LENGTH_SHORT).show();
                             getTransactions();
                         }
                     }
@@ -204,7 +203,7 @@ public class BuyFragment extends MyFragment {
                         try {
                             double m = response.getDouble("cashBalance");
                             if (attached && m < moneyAmount) {
-                                new ToastCreator(getActivity(), "Not enough balance!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Not enough balance!", Toast.LENGTH_SHORT).show();
                             } else {
                                 // Access the RequestQueue through your singleton class.
                                 MySingleton.getInstance(getActivity()).addToRequestQueue(jsonObjectRequest0);

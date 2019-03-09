@@ -40,6 +40,8 @@
             <ImageView
                 android:layout_margin="8dp"
                 android:id="@+id/slide_five_image_one"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
@@ -49,7 +51,7 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:layout_width="wrap_content"
-                android:textColor="@color/NavajoWhite"
+                android:textColor="@color/LightBlue"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:textSize="18sp"
@@ -59,6 +61,8 @@
             <ImageView
                 android:layout_margin="8dp"
                 android:id="@+id/slide_five_image_two"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
@@ -71,12 +75,14 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:textSize="18sp"
-                android:textColor="@color/NavajoWhite"
+                android:textColor="@color/LightBlue"
                 android:text="Beep Boop allows for \ntraffic decongestion." />
 
             <ImageView
                 android:layout_margin="8dp"
                 android:id="@+id/slide_five_image_three"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
@@ -89,7 +95,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:textSize="18sp"
-                android:textColor="@color/NavajoWhite"
+                android:textColor="@color/LightBlue"
                 android:text="The blockchain ensures \ndistributed consensus, \nprovenance and scalability." />
 
         </LinearLayout>

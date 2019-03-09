@@ -15,11 +15,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.jeff.beepboop.Toolbox.RandomStringGenerator;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,15 +53,15 @@ public class SellFragment extends MyFragment {
                 try {
                     creditAmount = Integer.parseInt(credits);
                     if (creditAmount <= 0) {
-                        Toast.makeText(getActivity(), R.string.sell_error_credits, Toast.LENGTH_SHORT).show();
+                        new ToastCreator(getActivity(), "Cannot sell 0 credits!", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 } catch (NumberFormatException e) {
-                    Toast.makeText(getActivity(), getString(R.string.sell_error_empty, "Credits"), Toast.LENGTH_SHORT).show();
+                    new ToastCreator(getActivity(), "Credits field is empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (money.equals("")) {
-                    Toast.makeText(getActivity(), getString(R.string.sell_error_empty, "Money"), Toast.LENGTH_SHORT).show();
+                    new ToastCreator(getActivity(), "Money field is empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 final double moneyAmount = Integer.parseInt(money);
@@ -92,7 +94,7 @@ public class SellFragment extends MyFragment {
                 });
                 dialog.show();
                 if (dialog.getWindow() != null) {
-                    dialog.getWindow().setBackgroundDrawableResource(R.drawable.box1);
+                    dialog.getWindow().setBackgroundDrawableResource(R.drawable.box2);
                 }
             }
         });
@@ -108,7 +110,7 @@ public class SellFragment extends MyFragment {
         JSONObject objRequest = new JSONObject();
         try {
             objRequest.put("$class", "org.acme.vehicle.auction.CreditListing");
-            objRequest.put("listingId", (new Random().nextDouble() + new Date().toString() + userid));
+            objRequest.put("listingId", (RandomStringGenerator.randomString(100)));
             objRequest.put("sellerAccount", beepBoopAccountPrefix + userid);
             objRequest.put("price", Double.toString(moneyAmount));
             objRequest.put("numCredits", Double.toString(creditAmount));
@@ -122,8 +124,15 @@ public class SellFragment extends MyFragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("asdf", "Credit Listing posted");
-                        toast.cancel();
-                        new ToastCreator(getActivity(), "Credit listing posted!", Toast.LENGTH_SHORT).show();
+                        try {
+                            Log.d("SELL_FRAG", "onResponse: Credit listing posted with = " + response.getString("listingId"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        if (attached) {
+                            toast.cancel();
+                            new ToastCreator(getActivity(), "Credit listing posted!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }, new Response.ErrorListener() {
 
@@ -131,11 +140,14 @@ public class SellFragment extends MyFragment {
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
                         parseVolleyError(error);
-                        toast.cancel();
-                        new ToastCreator(getActivity(), "Credit Listing posted!", Toast.LENGTH_LONG).show();
                         error.printStackTrace();
+                        if (attached) {
+                            toast.cancel();
+                            new ToastCreator(getActivity(), "Could not complete transaction!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
+        jsonObjectRequest0.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         String url ="http://beepboop.eastus.cloudapp.azure.com:3000/api/BeepBoopAccount/" + userid;
         JsonObjectRequest creditRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {

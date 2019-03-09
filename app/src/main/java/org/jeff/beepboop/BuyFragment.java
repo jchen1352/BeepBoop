@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -92,7 +93,7 @@ public class BuyFragment extends MyFragment {
                     });
                     dialog.show();
                     if (dialog.getWindow() != null) {
-                        dialog.getWindow().setBackgroundDrawableResource(R.drawable.box1);
+                        dialog.getWindow().setBackgroundDrawableResource(R.drawable.box2);
                     }
                 }
             });
@@ -131,7 +132,10 @@ public class BuyFragment extends MyFragment {
                                 });
                                 adapter.notifyDataSetChanged();
 
-                                swipeRefresh.setRefreshing(false);
+                                if (swipeRefresh.isRefreshing()) {
+                                    swipeRefresh.setRefreshing(false);
+                                }
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -173,20 +177,25 @@ public class BuyFragment extends MyFragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("asdf", "Buy completed");
-                        toast.cancel();
-                        new ToastCreator(getActivity(), "Purchase Complete!", Toast.LENGTH_SHORT).show();
-                        getTransactions();
+                        if (attached) {
+                            toast.cancel();
+                            new ToastCreator(getActivity(), "Purchase Complete!", Toast.LENGTH_SHORT).show();
+                            getTransactions();
+                        }
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         parseVolleyError(error);
                         error.printStackTrace();
-                        toast.cancel();
-                        new ToastCreator(getActivity(), "Purchase Complete!", Toast.LENGTH_LONG).show();
-                        getTransactions();
+                        if (attached) {
+                            toast.cancel();
+                            new ToastCreator(getActivity(), "Could not complete transaction!", Toast.LENGTH_SHORT).show();
+                            getTransactions();
+                        }
                     }
                 });
+        jsonObjectRequest0.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         String url ="http://beepboop.eastus.cloudapp.azure.com:3000/api/BeepBoopAccount/" + userid;
         JsonObjectRequest moneyRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {

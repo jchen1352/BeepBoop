@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import org.jeff.beepboop.LoginActivity;
 import org.jeff.beepboop.R;
 import org.jeff.beepboop.SplashActivity;
+import org.jeff.beepboop.Toolbox.BitmapScaler;
 
 public class WalkthroughSlideFive extends Fragment {
 
@@ -50,17 +51,20 @@ public class WalkthroughSlideFive extends Fragment {
             ImageView imageView1 = v.findViewById(R.id.slide_five_image_one);
             bitmap1 = BitmapFactory.decodeResource(getResources(),
                     R.drawable.slide_four_one);
-            imageView1.setImageBitmap(Bitmap.createScaledBitmap(bitmap1, 600, 400, false));
+//            imageView1.setImageBitmap(Bitmap.createScaledBitmap(bitmap1, 600, 400, false));
+            imageView1.setImageBitmap(BitmapScaler.scaleToFitHeight(bitmap1, 600));
 
             ImageView imageView2 = v.findViewById(R.id.slide_five_image_two);
             bitmap2 = BitmapFactory.decodeResource(getResources(),
                     R.drawable.slide_four_two);
-            imageView2.setImageBitmap(Bitmap.createScaledBitmap(bitmap2, 600, 600, false));
+//            imageView2.setImageBitmap(Bitmap.createScaledBitmap(bitmap2, 600, 600, false));
+            imageView2.setImageBitmap(BitmapScaler.scaleToFitHeight(bitmap2, 600));
 
             ImageView imageView3 = v.findViewById(R.id.slide_five_image_three);
             bitmap3 = BitmapFactory.decodeResource(getResources(),
                     R.drawable.slide_four_three);
-            imageView3.setImageBitmap(Bitmap.createScaledBitmap(bitmap3, 600, 600, false));
+//            imageView3.setImageBitmap(Bitmap.createScaledBitmap(bitmap3, 600, 600, false));
+            imageView3.setImageBitmap(BitmapScaler.scaleToFitHeight(bitmap3, 600));
 
             Button button = v.findViewById(R.id.slide_five_get_started);
             button.setOnClickListener(new View.OnClickListener() {

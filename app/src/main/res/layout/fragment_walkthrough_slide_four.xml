@@ -8,6 +8,8 @@
     <ImageView
         android:id="@+id/slide_four_image"
         android:layout_centerInParent="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -20,7 +22,7 @@
         android:textSize="18sp"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
-        android:textColor="@color/NavajoWhite"
+        android:textColor="@color/LightBlue"
         android:text="Trade B credits over our \ndigital marketplace" />
 
 </RelativeLayout>

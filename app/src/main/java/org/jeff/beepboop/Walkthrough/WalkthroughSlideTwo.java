@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import org.jeff.beepboop.R;
+import org.jeff.beepboop.Toolbox.BitmapScaler;
 
 
 public class WalkthroughSlideTwo extends Fragment {
@@ -43,7 +44,8 @@ public class WalkthroughSlideTwo extends Fragment {
             ImageView imageView = v.findViewById(R.id.slide_two_image);
             bitmap = BitmapFactory.decodeResource(getResources(),
                     R.drawable.slide_one);
-            imageView.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 1200, 350, false));
+            imageView.setImageBitmap(BitmapScaler.scaleToFitHeight(bitmap, 400));
+            //imageView.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 1200, 350, false));
         }
         return v;
     }

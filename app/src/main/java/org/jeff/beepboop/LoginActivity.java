@@ -35,6 +35,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -199,6 +200,7 @@ public class LoginActivity extends AppCompatActivity {
                             mEmailView.requestFocus();
                         }
                     });
+                    request1.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                     MySingleton.getInstance(LoginActivity.this).addToRequestQueue(request1);
                 }
             }

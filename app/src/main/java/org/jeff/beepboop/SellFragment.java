@@ -110,7 +110,7 @@ public class SellFragment extends MyFragment {
         JSONObject objRequest = new JSONObject();
         try {
             objRequest.put("$class", "org.acme.vehicle.auction.CreditListing");
-            objRequest.put("listingId", (RandomStringGenerator.randomString(100)));
+            objRequest.put("listingId", (RandomStringGenerator.randomString(50)));
             objRequest.put("sellerAccount", beepBoopAccountPrefix + userid);
             objRequest.put("price", Double.toString(moneyAmount));
             objRequest.put("numCredits", Double.toString(creditAmount));

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import org.jeff.beepboop.R;
 import org.jeff.beepboop.Toolbox.BitmapScaler;
+import org.jeff.beepboop.Toolbox.DeviceDimensionsHelper;
 
 public class WalkthroughSlideThree extends Fragment {
 
@@ -39,11 +40,12 @@ public class WalkthroughSlideThree extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_walkthrough_slide_three, container, false);
         if (getActivity() != null) {
+            int screenWidth = DeviceDimensionsHelper.getDisplayWidth(getActivity());
             ImageView imageView = v.findViewById(R.id.slide_three_image);
             bitmap = BitmapFactory.decodeResource(getResources(),
                     R.drawable.slide_two);
 //            imageView.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 1200, 350, false));
-            imageView.setImageBitmap(BitmapScaler.scaleToFitHeight(bitmap, 400));
+            imageView.setImageBitmap(BitmapScaler.scaleToFitWidth(bitmap, screenWidth));
         }
         return v;
     }

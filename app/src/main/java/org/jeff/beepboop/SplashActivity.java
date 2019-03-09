@@ -17,6 +17,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import org.jeff.beepboop.Toolbox.BitmapScaler;
+import org.jeff.beepboop.Toolbox.DeviceDimensionsHelper;
 import org.jeff.beepboop.Walkthrough.IntroActivity;
 
 public class SplashActivity extends AppCompatActivity {
@@ -77,10 +79,11 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void setupSplashIcon() {
+        int screenWidth = DeviceDimensionsHelper.getDisplayWidth(this);
         splashIcon = (ImageView) findViewById(R.id.splashIcon);
         splashBitmap = BitmapFactory.decodeResource(getResources(),
                 R.drawable.beep_boop_logo);
-        splashIcon.setImageBitmap(Bitmap.createScaledBitmap(splashBitmap, 800, 800, false));
+        splashIcon.setImageBitmap(BitmapScaler.scaleToFitWidth(splashBitmap, screenWidth/2));
     }
 
     @Override

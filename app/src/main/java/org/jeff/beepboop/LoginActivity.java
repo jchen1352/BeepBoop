@@ -44,6 +44,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -195,6 +196,7 @@ public class LoginActivity extends AppCompatActivity {
                             }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            parseVolleyError(error);
                             showProgress(false);
                             mEmailView.setError("Could not create account");
                             mEmailView.requestFocus();
@@ -307,6 +309,17 @@ public class LoginActivity extends AppCompatActivity {
         protected void onCancelled() {
             mAuthTask = null;
             showProgress(false);
+        }
+    }
+
+    public void parseVolleyError(VolleyError error) {
+        try {
+            String responseBody = new String(error.networkResponse.data, "utf-8");
+            JSONObject data = new JSONObject(responseBody);
+            JSONObject errors = data.getJSONObject("error");
+            Log.d("LOGIN", "parseVolleyError: " + errors.toString());
+        } catch (JSONException e) {
+        } catch (UnsupportedEncodingException errorr) {
         }
     }
 

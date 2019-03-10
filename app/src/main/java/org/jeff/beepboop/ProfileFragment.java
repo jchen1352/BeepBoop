@@ -111,7 +111,7 @@ public class ProfileFragment extends MyFragment {
                                 for (int i = 0; i < response.length(); i += 1) {
                                     JSONObject obj = response.getJSONObject(i);
                                     Log.d("asdf", obj.toString());
-                                    if (obj.getString("sellerAccount").endsWith(userid)) {
+                                    if (obj.getString("sellerAccount").endsWith(userid) && obj.getDouble("price") != 0.0) {
                                         final int numCredits = (int) obj.getDouble("numCredits");
                                         final int price = (int) obj.getDouble("price");
                                         final String listingId = obj.getString("listingId");
